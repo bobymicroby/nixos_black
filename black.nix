@@ -17,14 +17,8 @@ boot.initrd.luks.devices = [
  }
 ];
    
-networking.hostName = "black-nixos";
-
 networking.networkmanager.enable = true;
-networking.useDHCP = false;
-networking.interfaces.eno1.useDHCP = true;
-#networking.interfaces.wlp0s20f0u10.useDHCP = true;
-#networking.interfaces.wlp3s0.useDHCP = true;
-
+networking.hostName = "black-nixos";
 
 networking.firewall.allowedTCPPortRanges = [];
 
