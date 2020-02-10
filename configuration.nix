@@ -41,6 +41,7 @@ hardware.opengl.driSupport32Bit = true;
 nixpkgs.config.allowUnfree = true;  
 
 programs.adb.enable = true;
+programs.gnupg.agent.enable = true;
 
 environment.variables._JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd";
 environment.systemPackages = with pkgs; [
