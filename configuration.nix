@@ -9,13 +9,12 @@ imports =
 
 boot.loader.systemd-boot.enable = true;
 boot.loader.efi.canTouchEfiVariables = true;
-boot.initrd.luks.devices = [
- {
+boot.initrd.luks.devices =[ { 
   name = "root";
   device = "/dev/nvme0n1p6";
   preLVM = true;
- }
-];
+}];
+
    
 networking.hostName = "black-nixos";
 
@@ -26,7 +25,7 @@ networking.interfaces.eno1.useDHCP = true;
 #networking.interfaces.wlp3s0.useDHCP = true;
 
 
-networking.firewall.allowedTCPPortRanges = [];
+networking.firewall.allowedTCPPortRanges = [ { from = 8443; to = 8443; }  ];
 
 time.timeZone = "Europe/Sofia";
 
@@ -39,11 +38,11 @@ hardware.pulseaudio.support32Bit = true;
 hardware.opengl.driSupport32Bit = true;
 
 nixpkgs.config.allowUnfree = true;  
-
 programs.adb.enable = true;
 programs.gnupg.agent.enable = true;
 
 environment.variables._JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd";
+environment.variables._JAVA_AWT_WM_NONREPARENTING="1";
 environment.systemPackages = with pkgs; [
 
 
@@ -82,20 +81,21 @@ services.upower.enable = true;
 
 services.xserver = {
 
-layout = "us,bg(phonetic)";
-xkbOptions = "grp:lwin_toggle";
-
 
 enable=true;
+
+layout = "us,bg(phonetic)";
+xkbOptions = "grp:alts_toggle";
 
 autoRepeatDelay = 300;
 autoRepeatInterval = 50;
 
 displayManager = {
 
-slim = {
 
-defaultUser = "bobby";
+
+lightdm= {
+
 enable = true;
 
 };
@@ -117,11 +117,17 @@ screenSection = ''
  windowManager = {
     xmonad.enable = true;
     xmonad.extraPackages = hpkgs: [
-      hpkgs.taffybar
       hpkgs.xmonad-contrib
       hpkgs.xmonad-extras
     ];
-    default = "xmonad";
+
+    xmonad.config = ''
+          import XMonad
+          main = launch defaultConfig
+                 { 
+                   modMask = mod4Mask -- Use Super instead of Alt
+                 }
+        '';
   };    
 displayManager.sessionCommands =  ''
        xset r rate 350 50 
