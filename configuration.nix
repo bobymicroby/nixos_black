@@ -7,6 +7,8 @@ imports =
     ./hardware-configuration.nix
 ];
 
+
+boot.kernelModules = ["kvm-intel"];
 boot.loader.systemd-boot.enable = true;
 boot.loader.efi.canTouchEfiVariables = true;
 boot.initrd.luks.devices =[ { 
@@ -24,6 +26,10 @@ networking.interfaces.eno1.useDHCP = true;
 #networking.interfaces.wlp0s20f0u10.useDHCP = true;
 #networking.interfaces.wlp3s0.useDHCP = true;
 
+networking.wireless.extraConfig = ''
+  ctrl_interface=/run/wpa_supplicant
+  ctrl_interface_group=wheel
+'';
 
 networking.firewall.allowedTCPPortRanges = [ { from = 8443; to = 8443; }  ];
 
@@ -85,7 +91,7 @@ services.xserver = {
 enable=true;
 
 layout = "us,bg(phonetic)";
-xkbOptions = "grp:alts_toggle";
+xkbOptions = "grp:ralt_toggle";
 
 autoRepeatDelay = 300;
 autoRepeatInterval = 50;
@@ -94,7 +100,7 @@ displayManager = {
 
 
 
-lightdm= {
+slim = {
 
 enable = true;
 
@@ -115,6 +121,7 @@ screenSection = ''
     '';
         
  windowManager = {
+    default = "xmonad";
     xmonad.enable = true;
     xmonad.extraPackages = hpkgs: [
       hpkgs.xmonad-contrib
