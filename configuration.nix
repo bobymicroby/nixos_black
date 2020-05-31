@@ -37,7 +37,7 @@ time.timeZone = "Europe/Sofia";
 
 virtualisation.docker.enable = true;
 
-
+hardware.bluetooth.enable = true;
 hardware.pulseaudio.enable = true;
 hardware.pulseaudio.support32Bit = true;
 
@@ -84,14 +84,31 @@ conky
 
 
 services.upower.enable = true;
-
+services.blueman.enable = true;
 services.xserver = {
 
+
+
+
+libinput.enable = true;
+multitouch.enable = true;
+
+
+# Set extra config to libinput devices
+extraConfig = ''
+Section "InputClass"
+  Identifier      "Touchpads"
+  Driver          "libinput"
+  MatchProduct    "Apple Inc. Magic Trackpad 2"
+  MatchDevicePath "/dev/input/event*"
+EndSection
+
+'';
 
 enable=true;
 
 layout = "us,bg(phonetic)";
-xkbOptions = "grp:ralt_toggle";
+xkbOptions = "grp:ctrl_shift_toggle";
 
 autoRepeatDelay = 300;
 autoRepeatInterval = 50;
@@ -101,7 +118,7 @@ displayManager = {
 
 
 slim = {
-
+defaultUser = "bobby";
 enable = true;
 
 };
