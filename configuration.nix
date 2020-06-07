@@ -108,7 +108,7 @@ EndSection
 enable=true;
 
 layout = "us,bg(phonetic)";
-xkbOptions = "grp:ctrl_shift_toggle";
+xkbOptions = "grp:shifts_toggle";
 
 autoRepeatDelay = 300;
 autoRepeatInterval = 50;
@@ -134,7 +134,7 @@ monitorSection = ''
     '';
 
 screenSection = ''
-    Option "DPI" "150 x 150"
+    Option "DPI" "130 x 130"
     '';
         
  windowManager = {
@@ -147,10 +147,12 @@ screenSection = ''
 
     xmonad.config = ''
           import XMonad
+          
           main = launch defaultConfig
                  { 
                    modMask = mod4Mask -- Use Super instead of Alt
                  }
+                 
         '';
   };    
 displayManager.sessionCommands =  ''
@@ -159,7 +161,7 @@ displayManager.sessionCommands =  ''
        xrdb "${pkgs.writeText  "xrdb.conf" ''
        
 
-       XTerm*faceName:             xft:Dejavu Sans Mono for Powerline:size=11
+       XTerm*faceName:             xft:Dejavu Sans Mono for Powerline:size=9
        XTerm*utf8:                 2
 
        
