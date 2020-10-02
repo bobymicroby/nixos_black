@@ -51,15 +51,7 @@ environment.variables._JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd";
 environment.variables._JAVA_AWT_WM_NONREPARENTING="1";
 environment.systemPackages = with pkgs; [
 
-
-(pkgs.vim_configurable.customize {
-      name = "vim";
-      vimrcConfig.vam.pluginDictionaries = [
-        # vim-nix handles indentation better but does not perform sanity
-        { names = [ "vim-addon-nix" ]; ft_regex = "^nix\$"; }
-];
-})
-
+(import ./vim.nix)
 gitFull 
 htop
 which
@@ -78,6 +70,7 @@ gnome3.gnome-screenshot
 google-chrome
 dzen2
 conky
+vim
 ];
 
 
@@ -213,7 +206,7 @@ users.defaultUserShell = pkgs.zsh;
 
 users.extraUsers.bobby = {
 createHome=true;
-extraGroups  = ["wheel" "docker" "video" "audio" "disk" "networkmanager"];
+extraGroups  = ["wheel" "docker" "video" "audio" "disk" "networkmanager" "adbusers"];
 group = "users";
 home  ="/home/bobby";
 isNormalUser = true;
@@ -224,3 +217,4 @@ uid = 1000;
   system.stateVersion = "19.09"; 
 
 }
+
