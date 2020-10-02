@@ -11,11 +11,12 @@ imports =
 boot.kernelModules = ["kvm-intel"];
 boot.loader.systemd-boot.enable = true;
 boot.loader.efi.canTouchEfiVariables = true;
-boot.initrd.luks.devices =[ { 
-  name = "root";
+
+boot.initrd.luks.devices.luksroot = { 
+  allowDiscards = true;
   device = "/dev/nvme0n1p6";
   preLVM = true;
-}];
+};
 
    
 networking.hostName = "black-nixos";
@@ -67,7 +68,6 @@ patchelf
 tmux
 dmenu
 gnome3.gnome-screenshot
-google-chrome
 dzen2
 conky
 vim
@@ -81,10 +81,10 @@ services.blueman.enable = true;
 services.xserver = {
 
 
+enable=true;
 
 
 libinput.enable = true;
-multitouch.enable = true;
 
 
 # Set extra config to libinput devices
@@ -98,7 +98,6 @@ EndSection
 
 '';
 
-enable=true;
 
 layout = "us,bg(phonetic)";
 xkbOptions = "grp:shifts_toggle";
@@ -106,17 +105,8 @@ xkbOptions = "grp:shifts_toggle";
 autoRepeatDelay = 300;
 autoRepeatInterval = 50;
 
-displayManager = {
 
 
-
-slim = {
-defaultUser = "bobby";
-enable = true;
-
-};
-
-};
 
 videoDrivers = [ "nvidia" ];
 dpi = 150;
@@ -131,7 +121,6 @@ screenSection = ''
     '';
         
  windowManager = {
-    default = "xmonad";
     xmonad.enable = true;
     xmonad.extraPackages = hpkgs: [
       hpkgs.xmonad-contrib
@@ -148,7 +137,14 @@ screenSection = ''
                  
         '';
   };    
-displayManager.sessionCommands =  ''
+ 
+ displayManager.defaultSession ="none+xmonad";
+
+ displayManager.sddm.enable = true;
+
+ displayManager.sessionCommands =  ''
+        
+       xsetroot -solid black
        xset r rate 350 50 
            
        xrdb "${pkgs.writeText  "xrdb.conf" ''
@@ -214,7 +210,7 @@ uid = 1000;
 }; 
 
 
-  system.stateVersion = "19.09"; 
+  system.stateVersion = "20.03"; 
 
 }
 
