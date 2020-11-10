@@ -12,6 +12,14 @@ boot.kernelModules = ["kvm-intel"];
 boot.loader.systemd-boot.enable = true;
 boot.loader.efi.canTouchEfiVariables = true;
 
+boot.loader.grub = { 
+enable = true;
+efiSupport = true;
+version = 2;
+device = "nodev";
+useOSProber = true;
+};
+
 boot.initrd.luks.devices.luksroot = { 
   allowDiscards = true;
   device = "/dev/nvme0n1p6";
@@ -71,6 +79,7 @@ gnome3.gnome-screenshot
 dzen2
 conky
 vim
+flameshot
 ];
 
 
@@ -125,23 +134,19 @@ screenSection = ''
     xmonad.extraPackages = hpkgs: [
       hpkgs.xmonad-contrib
       hpkgs.xmonad-extras
+      hpkgs.xmobar
+      hpkgs.yeganesh
     ];
 
-    xmonad.config = ''
-          import XMonad
-          
-          main = launch defaultConfig
-                 { 
-                   modMask = mod4Mask -- Use Super instead of Alt
-                 }
                  
-        '';
   };    
  
  displayManager.defaultSession ="none+xmonad";
 
- displayManager.sddm.enable = true;
-
+ displayManager.gdm = { 
+   wayland = false;
+   enable = true;
+  };
  displayManager.sessionCommands =  ''
         
        xsetroot -solid black
@@ -185,6 +190,7 @@ programs.ssh = {
  startAgent = true;
 
 };  
+services.gnome3.gnome-keyring.enable = true;
 
 programs.zsh = {
   shellAliases = {
@@ -210,7 +216,7 @@ uid = 1000;
 }; 
 
 
-  system.stateVersion = "20.03"; 
+  system.stateVersion = "20.09"; 
 
 }
 
