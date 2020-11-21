@@ -25,8 +25,9 @@ vim_configurable.customize {
 
     set laststatus=2   " Set up the status line so it's coloured and always on
 
-    " Add more settings below
-  '';
+    " Copy to system clipboard
+    set clipboard=unnamedplus
+    '';
   # store your plugins in Vim packages
   vimrcConfig.packages.myVimPackage = with pkgs.vimPlugins; {
     start = [               # Plugins loaded on launch

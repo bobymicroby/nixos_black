@@ -58,6 +58,7 @@
   environment.systemPackages = with pkgs; [
 
     (import ./vim.nix)
+    vim_configurable
     gitFull
     htop
     which
@@ -75,8 +76,9 @@
     gnome3.gnome-screenshot
     dzen2
     conky
-    vim
     flameshot
+    xclip
+    xsel
   ];
   
   
@@ -135,7 +137,7 @@
     };
     displayManager.sessionCommands = ''
        
-      xsetroot -solid black
+      xsetroot -solid '#073642'
       xset r rate 350 50 
           
       xrdb "${
