@@ -242,8 +242,8 @@
       enable = true;
       plugins =
         [ "git" "colored-man-pages" "command-not-found" "extract" "nix" ];
-      customPkgs = with pkgs; [ spaceship-prompt nix-zsh-completions ];
-      theme = "spaceship";
+      customPkgs = with pkgs; [ nix-zsh-completions ];
+      theme = "agnoster";
     };
   };
 
