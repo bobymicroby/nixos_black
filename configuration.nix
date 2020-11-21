@@ -192,16 +192,25 @@ programs.ssh = {
 };  
 services.gnome3.gnome-keyring.enable = true;
 
+
 programs.zsh = {
-  shellAliases = {
-  ff = "firefox &>/dev/null &";
-  };  
-  enable = true;
-  ohMyZsh.enable = true;
-  ohMyZsh.plugins = [ "git"];
-  ohMyZsh.theme = "robbyrussell";  
-  syntaxHighlighting.enable = true;
-};
+    enable = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
+    interactiveShellInit = ''
+      source "$(${pkgs.fzf}/bin/fzf-share)/key-bindings.zsh"
+    '';
+    ohMyZsh = {
+      enable = true;
+      plugins = [ "git" "colored-man-pages" "command-not-found" "extract" "nix" ];
+      customPkgs = with pkgs;[
+        spaceship-prompt
+        nix-zsh-completions
+      ];
+      theme = "spaceship";
+    };
+  };
+
 
 users.defaultUserShell = pkgs.zsh;
 
